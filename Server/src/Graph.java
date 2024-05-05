@@ -31,7 +31,8 @@ public class Graph {
         }
     }
 
-    public void findShortestPath(Integer id1, Integer id2){
+    public int findShortestPath(Integer id1, Integer id2){
         // TODO: Pick A Good Algorithm, Stating Why.
+        return 0;
     }
 }
