@@ -1,15 +1,32 @@
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Properties;
+
+import utils.NumericalChecker;
 
 public class GraphServer implements GraphRMO{
-    Graph graph;
-    ServerLogger logger;
+    private Graph graph;
+    private ServerLogger logger;
+    private NumericalChecker numericalChecker;
+
+    private static int port;
+    private static String host;
+    private static int rmiPort;
+
+
     public GraphServer(){
         super();
         readGraphFile("test.txt");
+        this.numericalChecker = new NumericalChecker();
     }
 
     @Override
@@ -48,14 +65,14 @@ public class GraphServer implements GraphRMO{
 
 			while (line != null) {
 				String[] pair = line.split(" ");
-                if (pair[0] == "S") {
+                if (!numericalChecker.isNumeric(pair[0]) && pair[0].equals("S")) {
                     break;
                 }
                 int n1 = Integer.parseInt(pair[0]);
                 int n2 = Integer.parseInt(pair[1]);
 
-                graph.addNode(n1);
-                graph.addNode(n2);
+                graph.addVertex(n1);
+                graph.addVertex(n2);
 
                 graph.addEdge(n1, n2);
 				// read next line
@@ -67,5 +84,49 @@ public class GraphServer implements GraphRMO{
 			e.printStackTrace();
 		}
     }
+
+    public static void setupProperties() throws IOException{
+        InputStream inputStream = null;
+        try {
+            Properties prop = new Properties();
+            String propFileName = "server.properties";
+
+            inputStream = new FileInputStream(propFileName);
+
+            if (inputStream != null) {
+                prop.load(inputStream);
+            } else {
+                ServerLogger.logError("property file '" + propFileName + "' not found in the classpath", new FileNotFoundException());
+            }
+
+            rmiPort = Integer.parseInt(prop.getProperty("GSP.rmiregistry.port"));
+            host = prop.getProperty("GSP.server");
+            port = Integer.parseInt(prop.getProperty("GSP.server.port"));
+
+        } catch (Exception e) {
+            ServerLogger.logError("Error ", e);
+        } finally {
+            assert inputStream != null;
+            inputStream.close();
+        }
+    }
     
+
+    public static void main(String[] args) throws IOException{
+        setupProperties();
+        ServerLogger.logInfo("Server Configurations Finished Loading");
+        try {
+            ServerLogger.logInfo("Initializing Server.....");
+            System.setProperty("java.rmi.server.hostname", host);
+            GraphRMO graphRMO = new GraphServer();
+            GraphRMO stub = (GraphRMO) UnicastRemoteObject.exportObject(graphRMO, port);
+
+            Registry registry = LocateRegistry.createRegistry(rmiPort);
+            registry.rebind("GraphRMO", stub);
+            ServerLogger.logInfo("Server has successfully started with port " + Integer.toString(port));
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

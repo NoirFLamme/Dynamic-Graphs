@@ -10,13 +10,6 @@ public class ServerLogger {
             // Set logging level
             logger.setLevel(Level.INFO);
 
-            // Create console handler and set its level
-            ConsoleHandler consoleHandler = new ConsoleHandler();
-            consoleHandler.setLevel(Level.INFO);
-
-            // Add the console handler to the logger
-            logger.addHandler(consoleHandler);
-
             // Create file handler and set its level
             FileHandler fileHandler = new FileHandler(LOG_FILE, true); // append mode
             fileHandler.setLevel(Level.INFO);
