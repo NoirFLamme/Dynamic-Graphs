@@ -14,7 +14,6 @@ public class Request {
             result += query.getResult();
             result += '\n';
         }
-
         return result;
     }
 }

@@ -17,7 +17,7 @@ public class Query {
         long startTime = System.currentTimeMillis();
         switch (operation) {
             case 'Q':
-                this.result = graph.findShortestPath(node1, node2);
+                this.result = graph.shortestPath(node1, node2);
                 break;
             case 'A':
                 graph.addEdge(node1, node2);
