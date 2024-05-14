@@ -11,7 +11,7 @@ public class ServerLogger {
             logger.setLevel(Level.INFO);
 
             // Create file handler and set its level
-            FileHandler fileHandler = new FileHandler(LOG_FILE, true); // append mode
+            FileHandler fileHandler = new FileHandler(LOG_FILE, false); // append mode
             fileHandler.setLevel(Level.INFO);
 
             // Add the file handler to the logger

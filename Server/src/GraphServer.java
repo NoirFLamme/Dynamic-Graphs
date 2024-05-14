@@ -32,7 +32,8 @@ public class GraphServer implements GraphRMO{
     @Override
     public String processRequests(String batch) throws RemoteException {
         // TODO Auto-generated method stub
-
+        ServerLogger.logInfo("Received New Request");
+        ServerLogger.logInfo("Processing....");
         Request request = new Request();
         ArrayList<Query> queries = splitOperations(batch);
         String result = request.processQueries(queries);
@@ -45,7 +46,7 @@ public class GraphServer implements GraphRMO{
         String[] sepBatch = batch.split("\n");
         for(String query : sepBatch){
             String[] entries = query.split(" ");
-            if (entries[0].toLowerCase() == "f") {
+            if (entries[0].toLowerCase() == "f" || entries.length != 3) {
                 break;
             }
             queires.add(new Query(entries[0].charAt(0), Integer.parseInt(entries[1]), Integer.parseInt(entries[2]), graph));
@@ -56,10 +57,10 @@ public class GraphServer implements GraphRMO{
 
     public void readGraphFile(String path){
         // TODO: Construct Graph Function
-
         BufferedReader reader;
         graph = new Graph();
 		try {
+            ServerLogger.logInfo("Reading Graph From PATH: " + path);
 			reader = new BufferedReader(new FileReader("sample.txt"));
 			String line = reader.readLine();
 
@@ -80,7 +81,9 @@ public class GraphServer implements GraphRMO{
 			}
 
 			reader.close();
+            ServerLogger.logInfo("Finished Reading Graph");
 		} catch (IOException e) {
+            ServerLogger.logError("Error Reading From File", e);
 			e.printStackTrace();
 		}
     }
@@ -117,7 +120,7 @@ public class GraphServer implements GraphRMO{
         ServerLogger.logInfo("Server Configurations Finished Loading");
         try {
             ServerLogger.logInfo("Initializing Server.....");
-            System.setProperty("java.rmi.server.hostname", host);
+            System.setProperty("java.rmi.server.hostname", "127.0.0.1");
             GraphRMO graphRMO = new GraphServer();
             GraphRMO stub = (GraphRMO) UnicastRemoteObject.exportObject(graphRMO, port);
 

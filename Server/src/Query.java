@@ -29,7 +29,7 @@ public class Query {
                 break;
         }
         long endTime = System.currentTimeMillis();
-        this.duration= (endTime - startTime) / 1000;
+        this.duration = (endTime - startTime) / 1000;
     }
 
     public long getDuration(){
