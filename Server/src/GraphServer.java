@@ -29,11 +29,11 @@ public class GraphServer implements GraphRMO{
     }
 
     @Override
-    public String processRequests(String batch) throws RemoteException {
+    public String processRequests(String batch, int id) throws RemoteException {
         // TODO Auto-generated method stub
-        logger.logInfo("Received New Request");
+        logger.logInfo("Received New Request From Node " + Integer.toString(id));
         logger.logInfo("Processing....");
-        Request request = new Request();
+        Request request = new Request(id);
         ArrayList<Query> queries = splitOperations(batch);
         String result = request.processQueries(queries);
 

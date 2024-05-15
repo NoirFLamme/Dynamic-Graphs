@@ -24,7 +24,7 @@ public class Client extends Thread {
 			Random randomGenerator = new Random();
 			for (RequestClient request : requests) {
 				long startTime = System.currentTimeMillis();
-				String response = graphRMO.processRequests(request.getOperations()); // "A 1 3\nA 4 5\nQ 1 5\nQ 5 1\nF"
+				String response = graphRMO.processRequests(request.getOperations(), (int) Thread.currentThread().getId()); // "A 1 3\nA 4 5\nQ 1 5\nQ 5 1\nF"
 				long endTime = System.currentTimeMillis();
 				long responseTime = endTime - startTime;
 				request.setReponse(response);

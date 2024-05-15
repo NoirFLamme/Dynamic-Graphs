@@ -13,20 +13,20 @@ public class Query {
         this.graph = graph;
     }
 
-    public void executeQuery(){
+    public void executeQuery(int id){
         long startTime = System.currentTimeMillis();
         switch (operation) {
             case 'Q':
-                logger.logInfo("Calculating Shortest Path Between" + Integer.toString(node1) + " and " + Integer.toString(node2));
+                logger.logInfo("Node: " + Integer.toString(id) + " , Calculating Shortest Path Between " + Integer.toString(node1) + " and " + Integer.toString(node2));
                 this.result = graph.shortestPath(node1, node2);
-                logger.logInfo("The Shortest Path Between " + Integer.toString(node1) + " and " + Integer.toString(node2) + " is " + Integer.toString(result));
+                logger.logInfo("Node: " + Integer.toString(id) + " , The Shortest Path Between " + Integer.toString(node1) + " and " + Integer.toString(node2) + " is " + Integer.toString(result));
                 break;
             case 'A':
-                logger.logInfo("Creating an Edge between " + Integer.toString(node1) + " and " + Integer.toString(node2));
+                logger.logInfo("Node: " + Integer.toString(id) + " , Creating an Edge between " + Integer.toString(node1) + " and " + Integer.toString(node2));
                 graph.addEdge(node1, node2);
                 break;
             case 'D':
-                logger.logInfo("Removing Edge between " + Integer.toString(node1) + " and " + Integer.toString(node2));
+                logger.logInfo("Node: " + Integer.toString(id) + " , Removing Edge between " + Integer.toString(node1) + " and " + Integer.toString(node2));
                 graph.removeEdge(node1, node2);
                 break;
             default:
