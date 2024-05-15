@@ -5,7 +5,7 @@ public class Query {
     Graph graph;
     long duration;
     int result;
-
+    private static ServerLogger logger = ServerLogger.getInstance();
     public Query(char operation, int node1, int node2, Graph graph){
         this.operation = operation;
         this.node1 = node1;
@@ -17,12 +17,16 @@ public class Query {
         long startTime = System.currentTimeMillis();
         switch (operation) {
             case 'Q':
+                logger.logInfo("Calculating Shortest Path Between" + Integer.toString(node1) + " and " + Integer.toString(node2));
                 this.result = graph.shortestPath(node1, node2);
+                logger.logInfo("The Shortest Path Between " + Integer.toString(node1) + " and " + Integer.toString(node2) + " is " + Integer.toString(result));
                 break;
             case 'A':
+                logger.logInfo("Creating an Edge between " + Integer.toString(node1) + " and " + Integer.toString(node2));
                 graph.addEdge(node1, node2);
                 break;
             case 'D':
+                logger.logInfo("Removing Edge between " + Integer.toString(node1) + " and " + Integer.toString(node2));
                 graph.removeEdge(node1, node2);
                 break;
             default:
