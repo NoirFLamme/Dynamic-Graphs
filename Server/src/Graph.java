@@ -1,21 +1,27 @@
 import java.util.*;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Graph<Vertex> {
 
     public Map<Vertex, List<Vertex>> adjVerticesList= new HashMap<>();
+    private ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
-   
     // main method
     void addVertex(Vertex v) {
+        readWriteLock.writeLock().lock();
         adjVerticesList.put( v, new LinkedList<>());
-
+        readWriteLock.writeLock().unlock();
     }
 
     void removeVertex(Vertex v) {
+        readWriteLock.writeLock().lock();
         adjVerticesList.remove(v);
+        readWriteLock.writeLock().unlock();
     }
 
     void addEdge(Vertex s, Vertex d) {
+        readWriteLock.writeLock().lock();
         if(!adjVerticesList.containsKey(s)){
             addVertex(s);
         }
@@ -23,13 +29,15 @@ public class Graph<Vertex> {
             addVertex(d);
         }
         adjVerticesList.get(s).add(d);
+        readWriteLock.writeLock().unlock();
     }
 
     void removeEdge(Vertex s, Vertex d) {
+        readWriteLock.writeLock().lock();
         List<Vertex> eV1 = adjVerticesList.get(s);
         if (eV1 != null)
             eV1.remove(d);
-
+        readWriteLock.writeLock().unlock();
     }
 
 
@@ -53,6 +61,7 @@ public class Graph<Vertex> {
 
     // Dijkstra's algorithm to find shortest path
     public int shortestPath(Vertex s, Vertex d) {
+        readWriteLock.readLock().lock();
         Map<Vertex, Integer> distances = new HashMap<>();
         PriorityQueue<Vertex> pq = new PriorityQueue<>((v1, v2) -> distances.get(v1) - distances.get(v2));
 
@@ -64,8 +73,10 @@ public class Graph<Vertex> {
 
         while (!pq.isEmpty()) {
             Vertex current = pq.poll();
-            if (current.equals(end))
+            if (current.equals(end)){
+                readWriteLock.readLock().unlock();
                 return distances.get(end);
+            }
             List<Vertex> neighbors = adjVerticesList.get(current);
             if (neighbors != null) {
                 for (Vertex neighbor : neighbors) {
@@ -77,7 +88,7 @@ public class Graph<Vertex> {
                 }
             }
         }
-
+        readWriteLock.readLock().unlock();
         return -1; // No path found
     }
 
