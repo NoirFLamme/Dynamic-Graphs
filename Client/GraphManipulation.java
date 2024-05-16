@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -5,18 +7,55 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 
 public class GraphManipulation {
-	public static void main(String args[]) {
-		createClientLog();
-		try {
-			Client clientThread = new Client();
-			clientThread.start();
-		} catch (Exception e) {
-			System.err.println("GraphService exception:");
-			e.printStackTrace();
-		}
-	}
+    static ArrayList<Long> responseTimePerClient = new ArrayList<>();
+    public static void main(String args[]) {
+        try {
+            int numberOfClients = 5;
+            Client[] clients = new Client[numberOfClients];
+            for (int i = 0; i < clients.length; i++) {
+                clients[i] = new Client();
+                clients[i].start();
+            }
+            for (int i = 0; i < clients.length; i++) {
+                clients[i].join();
+                responseTimePerClient.add(clients[i].getTotalResponseTime());
+            }
+
+            responseTimeVSnumClients(responseTimePerClient);
+        } catch (Exception e) {
+            System.err.println("GraphService exception:");
+            e.printStackTrace();
+        }
+    }
+
+    /********************/
+    private static void responseTimeVSnumClients(ArrayList<Long> responseTimes) {
+        try {
+            File analysisFile = new File("logs/client/numberOfClients_analysis" + ".txt");
+            if (!analysisFile.exists()) {
+                analysisFile.createNewFile();
+            }
+            FileWriter analysisFileWriter = new FileWriter(analysisFile, true);
+
+            analysisFileWriter.write("Number Of Clients vs Average Response Time\n");
+
+            long totalResponseTime = 0;
+            int clientNum = 0;
+
+            for (long responseTime : responseTimes) {
+                clientNum++;
+                totalResponseTime += responseTime;
+                long averageResponseTime = totalResponseTime / clientNum;
+                analysisFileWriter.write(clientNum + "\t" + averageResponseTime + "\n");
+            }
+            analysisFileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 	private static void createClientLog(){
 		String directoryPath = "logs\\client";
