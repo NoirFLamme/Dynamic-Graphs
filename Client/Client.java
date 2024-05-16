@@ -14,6 +14,9 @@ import java.util.Random;
 
 public class Client extends Thread {
 
+	// Total response time for each client
+	long totalResponseTime = 0;
+
 	public void run() {
 		try {
 			System.err.println("ClientID: " + Thread.currentThread().getId());
@@ -43,6 +46,9 @@ public class Client extends Thread {
 				int addDeletePercentage = calculateAddDeletePercentage(request.getOperations());
 				addDeletePercentages.add(addDeletePercentage);
 
+				// Add response time to the total response time per client
+				totalResponseTime += responseTime;
+
 				int sleepTime = randomGenerator.nextInt(100);
 				Thread.sleep(sleepTime);
 			}
@@ -54,6 +60,10 @@ public class Client extends Thread {
 		} catch (NotBoundException | InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public long getTotalResponseTime(){
+		return totalResponseTime;
 	}
 
 	private GraphRMO getGraphRMO() throws RemoteException, NotBoundException {
@@ -158,4 +168,5 @@ public class Client extends Thread {
 
 		return (int) ((addDeleteOps / (double) totalOps) * 100);
 	}
+
 }
