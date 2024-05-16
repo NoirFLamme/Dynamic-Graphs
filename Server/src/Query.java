@@ -1,3 +1,6 @@
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 public class Query {
     char operation;
     int node1;
@@ -5,6 +8,7 @@ public class Query {
     Graph graph;
     long duration;
     int result;
+
     private static ServerLogger logger = ServerLogger.getInstance();
     public Query(char operation, int node1, int node2, Graph graph){
         this.operation = operation;

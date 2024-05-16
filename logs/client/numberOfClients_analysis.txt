@@ -4,3 +4,19 @@ Number Of Clients vs Average Response Time
 3	342
 4	343
 5	336
+Number Of Clients vs Average Response Time
+1	948
+2	964
+3	953
+4	946
+5	962
+6	960
+7	952
+8	956
+9	955
+10	946
+11	947
+12	944
+13	946
+14	947
+15	948

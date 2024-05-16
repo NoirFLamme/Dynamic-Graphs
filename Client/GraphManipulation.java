@@ -13,7 +13,7 @@ public class GraphManipulation {
     static ArrayList<Long> responseTimePerClient = new ArrayList<>();
     public static void main(String args[]) {
         try {
-            int numberOfClients = 5;
+            int numberOfClients = 15;
             Client[] clients = new Client[numberOfClients];
             for (int i = 0; i < clients.length; i++) {
                 clients[i] = new Client();
