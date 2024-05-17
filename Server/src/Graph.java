@@ -92,5 +92,36 @@ public class Graph<Vertex> {
         return -1; // No path found
     }
 
+    public int bellmanFord(Vertex source, Vertex destination) {
+        readWriteLock.readLock().lock();
+        Map<Vertex, Integer> distances = new HashMap<>();
+        for (Vertex vertex : adjVerticesList.keySet()) {
+            distances.put(vertex, Integer.MAX_VALUE);
+        }
+        distances.put(source, 0);
+
+        int numVertices = adjVerticesList.size();
+        for (int i = 1; i < numVertices; i++) {
+            for (Vertex u : adjVerticesList.keySet()) {
+                if (distances.get(u) == Integer.MAX_VALUE) continue;
+                List<Vertex> neighbors = adjVerticesList.get(u);
+                if (neighbors != null) {
+                    for (Vertex v : neighbors) {
+                        int newDist = distances.get(u) + 1; // Edge weight is assumed to be 1
+                        if (newDist < distances.get(v)) {
+                            distances.put(v, newDist);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        int result = distances.getOrDefault(destination, Integer.MAX_VALUE);
+        readWriteLock.readLock().unlock();
+        return result == Integer.MAX_VALUE ? -1 : result; // Return -1 if no path found
+    }
+    
+
 
 }

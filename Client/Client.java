@@ -75,7 +75,7 @@ public class Client extends Thread {
 
 	private ArrayList<RequestClient> generateRequestsBatch() {
 		ArrayList<RequestClient> requests = new ArrayList<>();
-		RequestGenerator requestGenerator = new RequestGenerator(0.4, 5, 15);
+		RequestGenerator requestGenerator = new RequestGenerator(0.4, 10, 15);
 		int numOfRequests = 100;
 		for (int i = 0; i < numOfRequests; i++) {
 			RequestClient request = requestGenerator.getReqeust();

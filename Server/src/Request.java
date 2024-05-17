@@ -8,10 +8,10 @@ public class Request {
         this.duration = 0;
         this.id = id;
     }
-    public String processQueries(ArrayList<Query> queries){
+    public String processQueries(ArrayList<Query> queries, char mode){
         String result = "";
         for(Query query : queries){
-            query.executeQuery(this.id);
+            query.executeQuery(this.id, mode);
             this.duration += query.getDuration();
             result += query.getResult();
             result += '\n';

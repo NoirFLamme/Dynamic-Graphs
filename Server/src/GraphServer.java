@@ -20,6 +20,7 @@ public class GraphServer implements GraphRMO{
     private static int port;
     private static String host;
     private static int rmiPort;
+    private static char mode;
 
 
     public GraphServer(){
@@ -35,7 +36,7 @@ public class GraphServer implements GraphRMO{
         logger.logInfo("Processing....");
         Request request = new Request(id);
         ArrayList<Query> queries = splitOperations(batch);
-        String result = request.processQueries(queries);
+        String result = request.processQueries(queries, mode);
 
         return result;
     }
@@ -117,6 +118,19 @@ public class GraphServer implements GraphRMO{
     public static void main(String[] args) throws IOException{
         setupProperties();
         logger.logInfo("Server Configurations Finished Loading");
+        if (args.length == 1 && args[0].equals("B")) {
+            mode = 'B';
+            logger.logInfo("Chose Bellman");
+        }
+        else if(args.length == 1 && args[0].equals("D")){
+            mode = 'D';
+            logger.logInfo("Chose Dijkstra");
+        }
+        else{
+            System.out.println("Please Add Arguments D or B for shortest path algorithm");
+            logger.logWarning("Inserted Invalid Option");
+            return;
+        }
         try {
             logger.logInfo("Initializing Server.....");
             System.setProperty("java.rmi.server.hostname", "127.0.0.1");

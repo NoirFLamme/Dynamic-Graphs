@@ -17,12 +17,17 @@ public class Query {
         this.graph = graph;
     }
 
-    public void executeQuery(int id){
+    public void executeQuery(int id, char mode){
         long startTime = System.currentTimeMillis();
         switch (operation) {
             case 'Q':
                 logger.logInfo("Node: " + Integer.toString(id) + " , Calculating Shortest Path Between " + Integer.toString(node1) + " and " + Integer.toString(node2));
-                this.result = graph.shortestPath(node1, node2);
+                if (mode == 'B') {
+                    this.result = graph.bellmanFord(node1, node2);
+                }
+                else if(mode == 'D'){
+                    this.result = graph.shortestPath(node1, node2);
+                }
                 logger.logInfo("Node: " + Integer.toString(id) + " , The Shortest Path Between " + Integer.toString(node1) + " and " + Integer.toString(node2) + " is " + Integer.toString(result));
                 break;
             case 'A':
