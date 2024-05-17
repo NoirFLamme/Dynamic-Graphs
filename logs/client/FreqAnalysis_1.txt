@@ -1,0 +1,70 @@
+Request : 
+D 13 2
+F
+ Response : 
+0
+response time : 22
+-------------------------------
+Request : 
+D 9 6
+F
+ Response : 
+0
+response time : 3
+-------------------------------
+Request : 
+D 15 2
+F
+ Response : 
+0
+response time : 3
+-------------------------------
+Request : 
+D 1 14
+F
+ Response : 
+0
+response time : 3
+-------------------------------
+Request : 
+D 3 11
+F
+ Response : 
+0
+response time : 3
+-------------------------------
+Request : 
+A 1 12
+F
+ Response : 
+0
+response time : 3
+-------------------------------
+Request : 
+D 4 5
+F
+ Response : 
+0
+response time : 2
+-------------------------------
+Request : 
+D 15 15
+F
+ Response : 
+0
+response time : 3
+-------------------------------
+Request : 
+A 4 7
+F
+ Response : 
+0
+response time : 2
+-------------------------------
+Request : 
+A 6 11
+F
+ Response : 
+0
+response time : 2
+-------------------------------

@@ -1,0 +1,130 @@
+Request : 
+Q 7 3
+A 10 14
+D 10 10
+Q 15 15
+F
+ Response : 
+-1
+0
+0
+0
+response time : 7
+-------------------------------
+Request : 
+Q 3 2
+Q 2 6
+D 14 2
+D 7 12
+F
+ Response : 
+2
+-1
+0
+0
+response time : 11
+-------------------------------
+Request : 
+Q 7 5
+A 15 5
+Q 8 7
+A 11 10
+F
+ Response : 
+4
+0
+-1
+0
+response time : 11
+-------------------------------
+Request : 
+D 14 11
+Q 5 7
+D 5 8
+Q 4 3
+F
+ Response : 
+0
+1
+0
+-1
+response time : 11
+-------------------------------
+Request : 
+A 1 13
+D 5 12
+Q 4 14
+Q 8 3
+F
+ Response : 
+0
+0
+3
+-1
+response time : 10
+-------------------------------
+Request : 
+Q 14 4
+Q 8 2
+D 14 5
+A 2 8
+F
+ Response : 
+-1
+6
+0
+0
+response time : 11
+-------------------------------
+Request : 
+D 14 4
+Q 4 5
+D 10 4
+Q 2 4
+F
+ Response : 
+0
+2
+0
+1
+response time : 10
+-------------------------------
+Request : 
+Q 9 7
+Q 12 13
+D 7 15
+D 3 9
+F
+ Response : 
+-1
+2
+0
+0
+response time : 10
+-------------------------------
+Request : 
+Q 8 8
+Q 10 1
+D 13 3
+A 3 8
+F
+ Response : 
+0
+-1
+0
+0
+response time : 10
+-------------------------------
+Request : 
+A 5 7
+Q 1 11
+D 5 10
+Q 1 13
+F
+ Response : 
+0
+3
+0
+1
+response time : 5
+-------------------------------
