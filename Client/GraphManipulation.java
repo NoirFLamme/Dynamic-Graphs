@@ -12,8 +12,13 @@ import java.util.ArrayList;
 public class GraphManipulation {
     static ArrayList<Long> responseTimePerClient = new ArrayList<>();
     public static void main(String args[]) {
+        if (args.length != 1) {
+            System.out.println("Please insert the number of clients");
+            return;
+        }
+        createClientLog();
         try {
-            int numberOfClients = 5;
+            int numberOfClients = Integer.parseInt(args[0]);
             Client[] clients = new Client[numberOfClients];
             for (int i = 0; i < clients.length; i++) {
                 clients[i] = new Client();
