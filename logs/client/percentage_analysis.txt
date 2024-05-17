@@ -1,0 +1,7 @@
+Percentage of Add/Delete Operations vs Average Response Time
+Add/Delete Percentage	Average Response Time (ms)
+20.0%		3
+40.0%		3
+60.0%		2
+80.0%		3
+100.0%		2

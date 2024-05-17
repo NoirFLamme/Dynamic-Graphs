@@ -12,13 +12,8 @@ import java.util.ArrayList;
 public class GraphManipulation {
     static ArrayList<Long> responseTimePerClient = new ArrayList<>();
     public static void main(String args[]) {
-        if (args.length != 1) {
-            System.out.println("Please insert the number of clients");
-            return;
-        }
-        createClientLog();
         try {
-            int numberOfClients = Integer.parseInt(args[0]);
+            int numberOfClients = 5;
             Client[] clients = new Client[numberOfClients];
             for (int i = 0; i < clients.length; i++) {
                 clients[i] = new Client();
@@ -40,9 +35,10 @@ public class GraphManipulation {
     private static void responseTimeVSnumClients(ArrayList<Long> responseTimes) {
         try {
             File analysisFile = new File("logs/client/numberOfClients_analysis" + ".txt");
-            if (!analysisFile.exists()) {
-                analysisFile.createNewFile();
+            if (analysisFile.exists()) {
+                analysisFile.delete();
             }
+            analysisFile.createNewFile();
             FileWriter analysisFileWriter = new FileWriter(analysisFile, false);
 
             analysisFileWriter.write("Number Of Clients vs Average Response Time\n");
